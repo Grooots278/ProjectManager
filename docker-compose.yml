@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  api:
+    image: projectmanager-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:8080"
+    volumes:
+      - db-data:/app/data
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Data Source=/app/data/projectmanager.db
+
+volumes:
+  db-data:
