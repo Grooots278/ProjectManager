@@ -10,7 +10,7 @@ public class Employee
 
     // Navigation properties to EF
     private readonly List<ProjectEmployee> _projectEmployees = new();
-    private IReadOnlyCollection<ProjectEmployee> ProjectEmployees => _projectEmployees.AsReadOnly();
+    public IReadOnlyCollection<ProjectEmployee> ProjectEmployees => _projectEmployees.AsReadOnly();
 
     private Employee() { } //EF
 
