@@ -25,4 +25,10 @@ public class Employee
     {
         return new Employee(fullName, email);
     }
+
+    public void Update(FullName newName, Email newEmail)
+    {
+        Name = newName ?? throw new ArgumentNullException(nameof(newName));
+        Email = newEmail ?? throw new ArgumentNullException(nameof(newEmail));
+    }
 }
