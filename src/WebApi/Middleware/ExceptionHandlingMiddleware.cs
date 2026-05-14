@@ -23,6 +23,13 @@ public class ExceptionHandlingMiddleware
             var result = JsonSerializer.Serialize(new { errors = ex.Errors });
             await context.Response.WriteAsync(result);
         }
+        catch (NotFoundException ex)
+        {
+            context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+            context.Response.ContentType = "application/json";
+            var result = JsonSerializer.Serialize(new { error = ex.Message });
+            await context.Response.WriteAsync(result);
+        }
         catch
         {
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
