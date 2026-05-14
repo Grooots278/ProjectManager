@@ -32,6 +32,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseRequestLogging();
+app.UseExceptionHandling();
+
 app.UseExceptionHandling(); 
 
 app.UseHttpsRedirection();
