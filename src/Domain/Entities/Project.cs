@@ -41,4 +41,21 @@ public class Project
 
         return new Project(name, customerCompany, executorCompany, startDate, endDate, priority, projectManagerId);
     }
+
+    public void Update(string name, string customerCompany, string executorCompany,
+    DateTime startDate, DateTime endDate, int priority, Guid projectManagerId)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Project name is required", nameof(name));
+        if (endDate <= startDate)
+            throw new ArgumentException("End date must be after start date");
+
+        Name = name;
+        CustomerCompany = customerCompany;
+        ExecutorCompany = executorCompany;
+        StartDate = startDate;
+        EndDate = endDate;
+        Priority = priority;
+        ProjectManagerId = projectManagerId;
+    }
 }
