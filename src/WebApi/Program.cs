@@ -1,8 +1,19 @@
 using Microsoft.EntityFrameworkCore;
 using ProjectManager.Application;
 using ProjectManager.Infrastructure.Persistence;
+using ProjectManager.WebApi.Middleware;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
+builder.Host.UseSerilog(); // Подключаем Serilog вместо стандартного логгера
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -21,7 +32,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseExceptionHandler(); 
+app.UseExceptionHandling(); 
 
 app.UseHttpsRedirection();
 app.MapControllers();
