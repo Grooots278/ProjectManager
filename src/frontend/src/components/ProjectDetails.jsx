@@ -8,6 +8,7 @@ export default function ProjectDetails({ projectId, onClose }) {
     const { data: project, loading, error, refetch } = useProject(projectId);
     const { addEmployee, removeEmployee } = useProjectMutations();
     const { addToast } = useToast();
+    const [employeeMap, setEmployeeMap] = useState({});
 
     const handleAddEmployee = async (selected) => {
         try {
@@ -18,6 +19,8 @@ export default function ProjectDetails({ projectId, onClose }) {
             addToast('Ошибка: ' + err.message, 'error');
         }
     };
+
+    
 
     const handleRemoveEmployee = async (emp) => {
         try {
