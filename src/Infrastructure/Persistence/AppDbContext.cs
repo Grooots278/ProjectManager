@@ -10,6 +10,7 @@ public class AppDbContext : DbContext, IApplicationDbContext
     public DbSet<Project> Projects => Set<Project>();
     public DbSet<Employee> Employees => Set<Employee>();
     public DbSet<ProjectEmployee> ProjectEmployees => Set<ProjectEmployee>();
+    public DbSet<ProjectTask> ProjectTasks => Set<ProjectTask>();
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
