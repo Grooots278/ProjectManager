@@ -8,12 +8,14 @@ import Step4 from './pages/Step4';
 import Step5 from './pages/Step5';
 import EmployeeListPage from './pages/EmployeeListPage';
 import ProjectListPage from './pages/ProjectListPage';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
     <BrowserRouter>
       <ToastProvider>
         <WizardProvider>
+          <Navbar />
           <Routes>
             {/* Wizard create project */}
             <Route path="/wizard/step1" element={<Step1 />} />

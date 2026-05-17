@@ -46,7 +46,7 @@ export default function Step4(){
             selectedValues={selectedEmployees}
             onAdd={handleAddEmployee}
             onRemove={handleRemoveEmployee}
-            placeholder="Добавьте сотрудников..." />
+            placeholder="Adding employees..." />
             <button type='submit'>Next</button>
             <button type='button' onClick={() => navigate('/wizard/step3')}>Back</button>
         </form>

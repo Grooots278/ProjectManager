@@ -63,12 +63,12 @@ export default function AsyncMultiSelect({ fetchOptions, selectedValues, onAdd, 
                 )}
             </div>
             <div>
-                {selectedValues.map((emp) => {
+                {selectedValues.map((emp) => (
                     <span key={emp.value} style={{ display: 'inline-block', margin: '2px', padding: '2px 5px', background: '#eee' }}>
-                        {emp.value}
-                        <button type='button' onClick={() => onRemove(emp)} style={{ marginLeft: '5px', cursor: 'pointer' }}>x</button>
+                        {emp.label}
+                        <button type="button" onClick={() => onRemove(emp)} style={{ marginLeft: '5px', cursor: 'pointer' }}>x</button>
                     </span>
-                })}
+                ))}
             </div>
         </div>
     );

@@ -10,5 +10,6 @@ public record ProjectDto(
     DateTime StartDate,
     DateTime EndDate,
     int Priority,
-    List<string> EmployeeEmails
+    List<string> EmployeeEmails,
+    List<Guid> EmployeeIds
 );

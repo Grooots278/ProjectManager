@@ -20,13 +20,17 @@ public class MappingProfile : Profile
                 src.StartDate,
                 src.EndDate,
                 src.Priority,
-                null!                    
+                null!,
+                null!
             ))
             .ForMember(dest => dest.ProjectManagerFullName,
                 opt => opt.MapFrom(src => src.ProjectManager.Name.GetFullName()))
             .ForMember(dest => dest.EmployeeEmails,
                 opt => opt.MapFrom(src => src.ProjectEmployees
-            .Select(pe => pe.Employee.Email.ToString()).ToList()));
+            .Select(pe => pe.Employee.Email.ToString()).ToList()))
+            .ForMember(dest => dest.EmployeeIds, 
+                opt => opt.MapFrom(src => src.ProjectEmployees
+                    .Select(pe => pe.EmployeeId).ToList()));
 
         CreateMap<Employee, EmployeeDto>()
             .ConstructUsing(src => new EmployeeDto(

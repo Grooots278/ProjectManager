@@ -14,7 +14,7 @@ export default function ProjectListPage(){
     const [viewingProjectId, setViewingProjectId] = useState(null);
     const [deleteTarget, setDeleteTarget] = useState(null);
     const { addToast } = useToast();
-    const { projects, loading, error, refetch } = useProjectList(debouncedFilters);
+    const { data: projects, loading, error, refetch } = useProjectList(debouncedFilters);
     const { update, remove } = useProjectMutations();
 
     //Dobounce filters
