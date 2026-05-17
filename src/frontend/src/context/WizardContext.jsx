@@ -27,7 +27,7 @@ function wizardReducer(state, action){
         case 'TOGGLE_EMPLOYEE':
             const ids = state.selectedEmployeeIds.includes(action.id)
                 ? state.selectedEmployeeIds.filter(id => id !== action.id)
-                : [...state, selectedEmployeeIds, action.id];
+                : [...state.selectedEmployeeIds, action.id];
             return {...state, selectedEmployeeIds: ids };
         case 'ADD_DOCUMENTS':
             return {...state, documents: [...state.documents, ...action.files] };

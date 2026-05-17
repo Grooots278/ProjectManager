@@ -10,10 +10,10 @@ public record DeleteEmployeeCommand(Guid Id) : IRequest;
 
 public class DeleteEmployeeCommandHandler : IRequestHandler<DeleteEmployeeCommand>
 {
-    private readonly IApplcationDbContext _context;
+    private readonly IApplicationDbContext _context;
     private readonly ILogger<DeleteEmployeeCommandHandler> _logger;
 
-    public DeleteEmployeeCommandHandler(IApplcationDbContext context, ILogger<DeleteEmployeeCommandHandler> logger)
+    public DeleteEmployeeCommandHandler(IApplicationDbContext context, ILogger<DeleteEmployeeCommandHandler> logger)
     {
         _context = context;
         _logger = logger;
@@ -29,7 +29,7 @@ public class DeleteEmployeeCommandHandler : IRequestHandler<DeleteEmployeeComman
         }
 
         _context.Employees.Remove(employee);
-        await _context.SaveChangeAsync(cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
         _logger.LogInformation("Employee {EmployeeId} deleted", request.Id);
     }
 }

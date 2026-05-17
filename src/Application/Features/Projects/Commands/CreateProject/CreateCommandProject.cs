@@ -18,9 +18,9 @@ public record CreateProjectCommand : IRequest<Guid>
 
 public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand, Guid>
 {
-    private readonly IApplcationDbContext _context;
+    private readonly IApplicationDbContext _context;
 
-    public CreateProjectCommandHandler(IApplcationDbContext context) => _context = context;
+    public CreateProjectCommandHandler(IApplicationDbContext context) => _context = context;
 
     public async Task<Guid> Handle(CreateProjectCommand command, CancellationToken cancellationToken)
     {
@@ -35,7 +35,7 @@ public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand,
         );
 
         _context.Projects.Add(project);
-        await _context.SaveChangeAsync(cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
         return project.Id;
     }
 }

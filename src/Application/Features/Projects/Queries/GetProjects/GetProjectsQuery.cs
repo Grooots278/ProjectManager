@@ -22,10 +22,10 @@ public record GetProjectsQuery : IRequest<List<ProjectDto>>
 
 public class GetProjectsQueryHandler : IRequestHandler<GetProjectsQuery, List<ProjectDto>>
 {
-    private readonly IApplcationDbContext _context;
+    private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
 
-    public GetProjectsQueryHandler(IApplcationDbContext context, IMapper mapper)
+    public GetProjectsQueryHandler(IApplicationDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;

@@ -9,10 +9,10 @@ public record GetEmployeeByIdQuery(Guid Id) : IRequest<EmployeeDto?>;
 
 public class GetEmployeeByIdQueryHandler : IRequestHandler<GetEmployeeByIdQuery, EmployeeDto?>
 {
-    private readonly IApplcationDbContext _context;
+    private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
 
-    public GetEmployeeByIdQueryHandler(IApplcationDbContext context, IMapper mapper)
+    public GetEmployeeByIdQueryHandler(IApplicationDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;

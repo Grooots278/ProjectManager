@@ -4,10 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import { useWizard } from '../context/WizardContext';
 import AsyncSelect from '../components/AsyncSelect';
 import { searchEmployees } from '../api/employees';
+import { useState, useEffect } from 'react';
 
 export default function Step3(){
     const { state, dispatch } = useWizard();
     const navigate = useNavigate();
+    const [managerLabel, setManagerLabel] = useState('');
+
+    useEffect(() => {
+        dispatch({ type: 'SET_MANAGER', id: null });
+    }, []);
 
     const fetchEmployees = async (query) => {
         const employees = await searchEmployees(query);
@@ -18,7 +24,8 @@ export default function Step3(){
     };
 
     const handleManagerChange = (selectId) => {
-        dispatch({ type: 'SET_MANAGER', id: selected.value });
+        dispatch({ type: 'SET_MANAGER', id: selectId.value });
+        setManagerLabel(selectId.label);
     };
 
     const handleSubmit = (e) => {
@@ -36,6 +43,7 @@ export default function Step3(){
             <AsyncSelect 
             fetchOptions={fetchEmployees}
             onChange={handleManagerChange}
+            value={managerLabel}
             placeholder="Employee search..." />
             <button type='submit'>Next</button>
             <button type='button' onClick={() => navigate('/wizard/step2')}>Back</button>

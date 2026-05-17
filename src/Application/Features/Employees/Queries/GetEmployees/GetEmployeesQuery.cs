@@ -15,10 +15,10 @@ public record GetEmployeesQuery : IRequest<List<EmployeeDto>>
 
 public class GetEmployeesQueryHandler : IRequestHandler<GetEmployeesQuery, List<EmployeeDto>>
 {
-    private readonly IApplcationDbContext _context;
+    private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
 
-    public GetEmployeesQueryHandler(IApplcationDbContext context, IMapper mapper)
+    public GetEmployeesQueryHandler(IApplicationDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
@@ -28,21 +28,15 @@ public class GetEmployeesQueryHandler : IRequestHandler<GetEmployeesQuery, List<
     {
         var query = _context.Employees.AsQueryable();
 
-        if (!string.IsNullOrWhiteSpace(request.NameFilter))
-        {
-            var filter = request.NameFilter.Trim().ToLower();
-            query = query.Where(e => e.Name.FirstName.ToLower().Contains(filter)
-                                     || e.Name.LastName.ToLower().Contains(filter)
-                                     || (e.Name.MiddleName != null && e.Name.MiddleName.ToLower().Contains(filter)));
-        }
-
+        // 1. Email filtering — you can leave it in the database (it works)
         if (!string.IsNullOrWhiteSpace(request.EmailFilter))
         {
-            var emailFilter = request.EmailFilter.Trim().ToLower();
-            query = query.Where(e => e.Email.Value.Contains(emailFilter));
+            var emailFilter = request.EmailFilter.Trim().ToLowerInvariant();
+            query = query.Where(e => e.Email.Value.ToLowerInvariant().Contains(emailFilter));
         }
 
-        query = request.SortBy?.ToLower() switch
+        // 2. Sorting is also performed at the database level (optional if the volume is large)
+        query = request.SortBy?.ToLowerInvariant() switch
         {
             "name" => request.SortDescending
                 ? query.OrderByDescending(e => e.Name.LastName).ThenByDescending(e => e.Name.FirstName)
@@ -53,7 +47,20 @@ public class GetEmployeesQueryHandler : IRequestHandler<GetEmployeesQuery, List<
             _ => query.OrderBy(e => e.Name.LastName)
         };
 
+        // 3. We get employees from the database (without the name filter)
         var employees = await query.ToListAsync(cancellationToken);
+
+        // 4. Filtering by name — now in memory, works with any encoding
+        if (!string.IsNullOrWhiteSpace(request.NameFilter))
+        {
+            var filter = request.NameFilter.Trim().ToLowerInvariant();
+                employees = employees.Where(e =>
+                    e.Name.FirstName.ToLowerInvariant().Contains(filter) ||
+                    e.Name.LastName.ToLowerInvariant().Contains(filter) ||
+                    (e.Name.MiddleName != null && e.Name.MiddleName.ToLowerInvariant().Contains(filter))
+                ).ToList();
+        }
+
         return _mapper.Map<List<EmployeeDto>>(employees);
     }
 }

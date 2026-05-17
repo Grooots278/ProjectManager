@@ -15,10 +15,10 @@ public record RemoveEmployeeFromProjectCommand : IRequest
 
 public class RemoveEmployeeFromProjectCommandHandler : IRequestHandler<RemoveEmployeeFromProjectCommand>
 {
-    private readonly IApplcationDbContext _context;
+    private readonly IApplicationDbContext _context;
     private readonly ILogger<RemoveEmployeeFromProjectCommandHandler> _logger;
 
-    public RemoveEmployeeFromProjectCommandHandler(IApplcationDbContext context, ILogger<RemoveEmployeeFromProjectCommandHandler> logger)
+    public RemoveEmployeeFromProjectCommandHandler(IApplicationDbContext context, ILogger<RemoveEmployeeFromProjectCommandHandler> logger)
     {
         _context = context;
         _logger = logger;
@@ -36,7 +36,7 @@ public class RemoveEmployeeFromProjectCommandHandler : IRequestHandler<RemoveEmp
         }
 
         _context.ProjectEmployees.Remove(projectEmployee);
-        await _context.SaveChangeAsync(cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
 
         _logger.LogInformation("Employee {EmployeeId} removed from project {ProjectId}", request.EmployeeId, request.ProjectId);
     }

@@ -10,10 +10,10 @@ public record GetProjectByIdQuery(Guid Id) : IRequest<ProjectDto?>;
 
 public class GetProjectByIdQueryHandler : IRequestHandler<GetProjectByIdQuery, ProjectDto?>
 {
-    private readonly IApplcationDbContext _context;
+    private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
 
-    public GetProjectByIdQueryHandler(IApplcationDbContext context, IMapper mapper)
+    public GetProjectByIdQueryHandler(IApplicationDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;

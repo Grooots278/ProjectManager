@@ -5,7 +5,7 @@ using ProjectManager.Domain.Entities;
 
 namespace ProjectManager.Infrastructure.Persistence;
 
-public class AppDbContext : DbContext, IApplcationDbContext
+public class AppDbContext : DbContext, IApplicationDbContext
 {
     public DbSet<Project> Projects => Set<Project>();
     public DbSet<Employee> Employees => Set<Employee>();
@@ -22,7 +22,7 @@ public class AppDbContext : DbContext, IApplcationDbContext
         base.OnModelCreating(modelBuilder);
     }
 
-    public Task<int> SaveChangeAsync(CancellationToken cancellationToken)
+    public Task<int> SaveChangesAsync(CancellationToken cancellationToken)
     {
         return base.SaveChangesAsync(cancellationToken);
     }

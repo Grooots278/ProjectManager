@@ -10,10 +10,10 @@ public record DeleteProjectCommand(Guid Id) : IRequest;
 
 public class DeleteProjectCommandHandler : IRequestHandler<DeleteProjectCommand>
 {
-    private readonly IApplcationDbContext _context;
+    private readonly IApplicationDbContext _context;
     private readonly ILogger<DeleteProjectCommandHandler> _logger;
 
-    public DeleteProjectCommandHandler(IApplcationDbContext context, ILogger<DeleteProjectCommandHandler> logger)
+    public DeleteProjectCommandHandler(IApplicationDbContext context, ILogger<DeleteProjectCommandHandler> logger)
     {
         _context = context;
         _logger = logger;
@@ -29,7 +29,7 @@ public class DeleteProjectCommandHandler : IRequestHandler<DeleteProjectCommand>
         }
 
         _context.Projects.Remove(project);
-        await _context.SaveChangeAsync(cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
         _logger.LogInformation("Project {ProjectId} deleted", request.Id);
     }
 }

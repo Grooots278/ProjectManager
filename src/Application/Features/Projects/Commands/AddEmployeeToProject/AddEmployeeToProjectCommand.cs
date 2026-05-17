@@ -15,10 +15,10 @@ public record AddEmployeeToProjectCommand : IRequest
 
 public class AddEmployeeToProjectCommandHandler : IRequestHandler<AddEmployeeToProjectCommand>
 {
-    private readonly IApplcationDbContext _context;
+    private readonly IApplicationDbContext _context;
     private readonly ILogger<AddEmployeeToProjectCommandHandler> _logger;
 
-    public AddEmployeeToProjectCommandHandler(IApplcationDbContext context, ILogger<AddEmployeeToProjectCommandHandler> logger)
+    public AddEmployeeToProjectCommandHandler(IApplicationDbContext context, ILogger<AddEmployeeToProjectCommandHandler> logger)
     {
         _context = context;
         _logger = logger;
@@ -44,7 +44,7 @@ public class AddEmployeeToProjectCommandHandler : IRequestHandler<AddEmployeeToP
 
         var projectEmployee = new ProjectEmployee(request.ProjectId, request.EmployeeId);
         _context.ProjectEmployees.Add(projectEmployee);
-        await _context.SaveChangeAsync(cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
 
         _logger.LogInformation("Employee {EmployeeId} added to project {ProjectId}", request.EmployeeId, request.ProjectId);
     }

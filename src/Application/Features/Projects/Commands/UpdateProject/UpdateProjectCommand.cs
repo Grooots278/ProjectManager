@@ -21,10 +21,10 @@ public record UpdateProjectCommand : IRequest
 
 public class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectCommand>
 {
-    private readonly IApplcationDbContext _context;
+    private readonly IApplicationDbContext _context;
     private readonly ILogger<UpdateProjectCommandHandler> _logger;
 
-    public UpdateProjectCommandHandler(IApplcationDbContext context, ILogger<UpdateProjectCommandHandler> logger)
+    public UpdateProjectCommandHandler(IApplicationDbContext context, ILogger<UpdateProjectCommandHandler> logger)
     {
         _context = context;
         _logger = logger;
@@ -48,7 +48,7 @@ public class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectCommand>
             request.Priority,
             request.ProjectManagerId);
 
-        await _context.SaveChangeAsync(cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
         _logger.LogInformation("Project {ProjectId} updated successfully", project.Id);
     }
 }

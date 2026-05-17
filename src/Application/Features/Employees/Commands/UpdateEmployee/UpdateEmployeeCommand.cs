@@ -18,10 +18,10 @@ public record UpdateEmployeeCommand : IRequest
 
 public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeCommand>
 {
-    private readonly IApplcationDbContext _context;
+    private readonly IApplicationDbContext _context;
     private readonly ILogger<UpdateEmployeeCommandHandler> _logger;
 
-    public UpdateEmployeeCommandHandler(IApplcationDbContext context, ILogger<UpdateEmployeeCommandHandler> logger)
+    public UpdateEmployeeCommandHandler(IApplicationDbContext context, ILogger<UpdateEmployeeCommandHandler> logger)
     {
         _context = context;
         _logger = logger;
@@ -40,7 +40,7 @@ public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeComman
         var newEmail = Email.Create(request.Email);
 
         employee.Update(newName, newEmail);
-        await _context.SaveChangeAsync(cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
 
         _logger.LogInformation("Employee {EmployeeId} updated", employee.Id);
     }

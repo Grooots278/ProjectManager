@@ -16,10 +16,10 @@ public record CreateEmployeeCommand : IRequest<Guid>
 
 public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeCommand, Guid>
 {
-    private readonly IApplcationDbContext _context;
+    private readonly IApplicationDbContext _context;
     private readonly ILogger<CreateEmployeeCommandHandler> _logger;
 
-    public CreateEmployeeCommandHandler(IApplcationDbContext context, ILogger<CreateEmployeeCommandHandler> logger)
+    public CreateEmployeeCommandHandler(IApplicationDbContext context, ILogger<CreateEmployeeCommandHandler> logger)
     {
         _context = context;
         _logger = logger;
@@ -33,7 +33,7 @@ public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComman
         var employee = Employee.Create(fullName, email);
 
         _context.Employees.Add(employee);
-        await _context.SaveChangeAsync(cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
 
         _logger.LogInformation("Employee {EmployeeId} created with email {Email}", employee.Id, email);
         return employee.Id;

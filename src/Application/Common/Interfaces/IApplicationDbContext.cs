@@ -3,11 +3,11 @@ using ProjectManager.Domain.Entities;
 
 namespace ProjectManager.Application.Common.Interfaces;
 
-public interface IApplcationDbContext
+public interface IApplicationDbContext
 {
     DbSet<Project> Projects { get; }
     DbSet<Employee> Employees { get; }
     DbSet<ProjectEmployee> ProjectEmployees { get; }
 
-    Task<int> SaveChangeAsync(CancellationToken cancellationToken = default);
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
